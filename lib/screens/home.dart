@@ -1,6 +1,8 @@
 
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:blog_flutter/screens/post_screen.dart';
+import 'package:blog_flutter/screens/profile.dart';
 import 'package:blog_flutter/services/user_service.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +35,37 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      
+      body: currentIndex == 0 ? const PostScreen() : const Profile(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+
+        },
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        notchMargin: 5.0,
+        elevation: 10.0,
+        clipBehavior: Clip.antiAlias,
+        child: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: '',
+            ),
+          ],
+          currentIndex: currentIndex,
+          onTap: (val){
+            setState(() {
+              currentIndex = val;
+            });
+          },
+        ),
+        ),
     );
   }
 }

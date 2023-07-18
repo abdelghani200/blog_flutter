@@ -18,6 +18,8 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
 
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   void _loadUserInfo() async {
     String token = await getToken();
     if(token == ''){
@@ -32,8 +34,8 @@ class _LoadingState extends State<Loading> {
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Login()), (route) => false);
       }
       else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('${response.error}'),
+        ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(SnackBar(
+        content: Text('${response.error}'),
         ));
       }
     }
@@ -47,12 +49,15 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+    key: _scaffoldKey,
+    body: Container(
       height: MediaQuery.of(context).size.height,
       color: Colors.white,
       child: const Center(
-        child: CircularProgressIndicator()
+        child: CircularProgressIndicator(),
       ),
-    );
+    ),
+  );
   }
 }
