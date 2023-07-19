@@ -1,4 +1,3 @@
-
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:blog_flutter/screens/post_screen.dart';
@@ -7,7 +6,7 @@ import 'package:blog_flutter/services/user_service.dart';
 import 'package:flutter/material.dart';
 
 import 'login.dart';
-
+import 'post_form.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -27,18 +26,21 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
             icon: const Icon(Icons.exit_to_app),
-            onPressed: (){
+            onPressed: () {
               logout().then((value) => {
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const Login()), (route) => false)
-              });
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => const Login()),
+                        (route) => false)
+                  });
             },
           )
         ],
       ),
       body: currentIndex == 0 ? const PostScreen() : const Profile(),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => const PostForm()));
         },
         child: const Icon(Icons.add),
       ),
@@ -59,13 +61,13 @@ class _HomeState extends State<Home> {
             ),
           ],
           currentIndex: currentIndex,
-          onTap: (val){
+          onTap: (val) {
             setState(() {
               currentIndex = val;
             });
           },
         ),
-        ),
+      ),
     );
   }
 }
